@@ -1,0 +1,23 @@
+
+name: Inspect 3105 ZIP
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download and extract project
+        run: |
+          curl -L --fail \
+            "https://raw.githubusercontent.com/Allanios46/Dowload-projeto-/main/3105-PRO-SEM-CRIPTOGRAFIA.zip" \
+            -o project.zip
+          unzip -t project.zip
+          unzip -Z1 project.zip > file-list.txt
+
+      - name: Upload file list
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3105-project-inventory
+          path: file-list.txt
