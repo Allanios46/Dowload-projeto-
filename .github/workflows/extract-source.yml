@@ -1,0 +1,33 @@
+
+name: Extract 3105 Source Files
+
+on:
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download project
+        run: |
+          curl -L --fail \
+            "https://raw.githubusercontent.com/Allanios46/Dowload-projeto-/main/3105-PRO-SEM-CRIPTOGRAFIA.zip" \
+            -o project.zip
+          unzip -q project.zip -d project
+
+      - name: Collect important files
+        run: |
+          mkdir analysis-files
+          cp project/3105-PRO-UNIFICADO/ThreeOneOSFive/helpers/LicenseClient.swift analysis-files/
+          cp project/3105-PRO-UNIFICADO/ThreeOneOSFive/helpers/AdminClient.swift analysis-files/
+          cp project/3105-PRO-UNIFICADO/ThreeOneOSFive/views/LicenseGateView.swift analysis-files/
+          cp project/3105-PRO-UNIFICADO/ThreeOneOSFive/views/AdminAccessView.swift analysis-files/
+          cp project/3105-PRO-UNIFICADO/docs/BUILD-TWO-IPAS.pt-BR.md analysis-files/
+          cp project/3105-PRO-UNIFICADO/docs/ARCHITECTURE-ROADMAP.pt-BR.md analysis-files/
+          cp project/3105-PRO-UNIFICADO/3105-PRO-STATUS.md analysis-files/
+
+      - name: Upload source files
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3105-source-files
+          path: analysis-files/
